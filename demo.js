@@ -5,13 +5,11 @@ angular.module('BlueAppDemo', [])
   	var main = this;
 	
 	main.buttonClicked = function() {
-	  	if (isWebBluetoothEnabled()) {
-			let filters = [{namePrefix: 'Grippack'}];
-			let optionalServices = ['0000180a-0000-1000-8000-00805f9b34fb'];
-
+	  	if (isBluetoothEnabled()) {
+			let filters = [{services: ['0000180a-0000-1000-8000-00805f9b34fb']}];
   			let options = {};
 			options.filters = filters;
-			options.optionalServices = optionalServices;
+
   
   			navigator.bluetooth.requestDevice(options) // Start a scan with options given.
   			.then(device => {
@@ -54,19 +52,18 @@ angular.module('BlueAppDemo', [])
 		}
 	}
 
-	function isWebBluetoothEnabled() {
+	function isBluetoothEnabled() {
     	if (navigator.bluetooth) {
-    		console.log("We have webbluetooth");
+    		console.log("We have bluetooth");
       		return true;
     	} else {
-      		ChromeSamples.setStatus('Web Bluetooth API is not available.\n' +
-          							'Please make sure the "Experimental Web Platform features" flag is enabled.');
       		return false;
     	}
   	}
   	
   	function dataToString(data) {
   	  	var value = '';
+  	  	
         for (var i = 0; i < data.byteLength; i++) {
             value = value + String.fromCharCode(data.getUint8(i));
         }
