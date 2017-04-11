@@ -42,7 +42,7 @@ function mainController($scope) {
             })
             .then(data => {
                 // Got the value. Let's use it in our application.
-                main.Data = dataToString(data);
+                main.Manufacturer = dataToString(data);
                 $scope.$apply();
             })
             .catch(error => {
