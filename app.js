@@ -2,20 +2,20 @@ angular.module('BlueAppDemo', [])
     .controller('MainController', ['$scope', mainController]);
 
 function mainController($scope) {
-    var main = this;
+	var main = this;
 
 	main.buttonClicked = function() {
 		if (isBluetoothEnabled()) {
 			let options = {	
-      				filters: [{name: 'HEXIWEAR'}],	
+				filters: [{name: 'HEXIWEAR'}],	
 				optionalServices: ['0000180a-0000-1000-8000-00805f9b34fb']
- 			};
+			};
  			
         	navigator.bluetooth.requestDevice(options)
             	.then(function(device) {
                 	// Receives device user selected.
                 	main.Name = device.name; // Store name
-                	main.Id = device.id; // Store id
+                	main.Id = device.uuid  ; // Store id
                 	$scope.$apply();
 
                 	return device.gatt.connect();
