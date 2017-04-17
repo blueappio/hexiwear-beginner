@@ -5,7 +5,7 @@ function mainController($scope) {
     var main = this;
 
 	main.buttonClicked = function() {
-		if (!isBluetoothEnabled()) {
+		if (isBluetoothEnabled()) {
         	navigator.bluetooth.requestDevice()
             	.then(function(device) {
                 	// Receives device user selected.
