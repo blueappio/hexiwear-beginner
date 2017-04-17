@@ -4,7 +4,7 @@ angular.module('BlueAppDemo', [])
 function mainController($scope) {
     var main = this;
 
-	main.buttonlClicked = function() {
+	main.buttonClicked = function() {
 		if (!isBluetoothEnabled()) {
         	navigator.bluetooth.requestDevice()
             	.then(function(device) {
