@@ -6,7 +6,12 @@ function mainController($scope) {
 
 	main.buttonClicked = function() {
 		if (isBluetoothEnabled()) {
-        	navigator.bluetooth.requestDevice()
+			let options = {	
+      			filters: [{name: 'HEXIWEAR'}],	
+				optionalServices: ['0000180a-0000-1000-8000-00805f9b34fb']
+ 			};
+ 			
+        	navigator.bluetooth.requestDevice(filters)
             	.then(function(device) {
                 	// Receives device user selected.
                 	main.Name = device.name; // Store name
