@@ -4,39 +4,41 @@ angular.module('BlueAppDemo', [])
 function mainController($scope) {
     var main = this;
 
-	if (!isBluetoothEnabled()) {
-        navigator.bluetooth.requestDevice()
-            .then(function(device) {
-                // Receives device user selected.
-                main.Name = device.name; // Store name
-                main.Id = device.id; // Store id
-                $scope.$apply();
+	main.buttonlClicked = function() {
+		if (!isBluetoothEnabled()) {
+        	navigator.bluetooth.requestDevice()
+            	.then(function(device) {
+                	// Receives device user selected.
+                	main.Name = device.name; // Store name
+                	main.Id = device.id; // Store id
+                	$scope.$apply();
 
-                return device.gatt.connect();
-            })
-            .then(function(server) {
-                // Device has connected.
-                // Get the service we are looking for to get data from.
-                return server.getPrimaryService('0000180a-0000-1000-8000-00805f9b34fb');
-            })
-            .then(function(service) {
-                // Got the service
-                // Get the characteristic where data is found.
-                return service.getCharacteristic('00002a29-0000-1000-8000-00805f9b34fb');
-            })
-            .then(function(c1) {
-                // Got characteristic.
-                // Read the value we want.
-                return c1.readValue();
-            })
-            .then(function(data) {
-                // Got the value. Let's use it in our application.
-                main.Manufacturer = dataToString(data);
-                $scope.$apply();
-            })
-            .catch(function(error) {
-                console.log('Argh! ' + error);
-            });
+                	return device.gatt.connect();
+            	})
+            	.then(function(server) {
+            	    // Device has connected.
+            	    // Get the service we are looking for to get data from.
+            	    return server.getPrimaryService('0000180a-0000-1000-8000-00805f9b34fb');
+            	})
+            	.then(function(service) {
+            	    // Got the service
+             	   // Get the characteristic where data is found.
+             	   return service.getCharacteristic('00002a29-0000-1000-8000-00805f9b34fb');
+            	})
+            	.then(function(c1) {
+            	    // Got characteristic.
+             	   // Read the value we want.
+             	   return c1.readValue();
+            	})
+            	.then(function(data) {
+            	    // Got the value. Let's use it in our application.
+            	    main.Manufacturer = dataToString(data);
+            	    $scope.$apply();
+				})
+            	.catch(function(error) {
+                	console.log('Argh! ' + error);
+            	});
+		}
 	}
 
     function isBluetoothEnabled() {
